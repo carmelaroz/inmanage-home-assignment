@@ -15,80 +15,40 @@ class Database {
         $this->conn->close();
     }
 
-    public function select($table, $columns = ['*'], $whereClause = null, $params = [])
-    {
-        $columnsString = implode(", ", $columns);
-        $query = "SELECT $columnsString FROM $table";
-        
-        if ($whereClause) {
-            $query .= " WHERE $whereClause";
+    public function select($query) {
+        $result = $this->conn->query($query);
+        if (!$result) {
+            throw new Exception("Query failed: " . $this->conn->error);
         }
-
-        $stmt = $this->conn->prepare($query);
-        
-        // Bind parameters if provided
-        if (!empty($params)) {
-            $stmt = $this->bindParameters($stmt, $params);
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
         }
-
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $data = $result->fetch_all(MYSQLI_ASSOC);
-
-        $stmt->close();
         return $data;
     }
 
-    public function insert($table, $data)
-    {
-        $columns = implode(", ", array_keys($data));
-        $placeholders = implode(", ", array_fill(0, count($data), "?"));
-        $query = "INSERT INTO $table ($columns) VALUES ($placeholders)";
-
-        $stmt = $this->conn->prepare($query);
-        $stmt = $this->bindParameters($stmt, array_values($data));
-
-        $result = $stmt->execute();
-        $stmt->close();
-
-        return $result;
-    }
-
-    public function update($table, $data, $whereClause, $params = [])
-    {
-        $setClause = implode(", ", array_map(fn($col) => "$col = ?", array_keys($data)));
-        $query = "UPDATE $table SET $setClause WHERE $whereClause";
-
-        $stmt = $this->conn->prepare($query);
-        $stmt = $this->bindParameters($stmt, array_merge(array_values($data), $params));
-
-        $result = $stmt->execute();
-        $stmt->close();
-
-        return $result;
-    }
-
-    public function delete($table, $whereClause, $params = [])
-    {
-        $query = "DELETE FROM $table WHERE $whereClause";
-
-        $stmt = $this->conn->prepare($query);
-        $stmt = $this->bindParameters($stmt, $params);
-
-        $result = $stmt->execute();
-        $stmt->close();
-
-        return $result;
-    }
-
-    private function bindParameters($stmt, $params)
-    {
-        if ($params) {
-            $types = str_repeat("s", count($params)); // Assume all parameters are strings
-            $stmt->bind_param($types, ...$params);
+    public function insert($query) {
+        if (!$this->conn->query($query)) {
+            throw new Exception("Insert failed: " . $this->conn->error);
         }
-        return $stmt;
+        // Return the ID of the inserted record (if applicable)
+        return $this->conn->insert_id;
     }
-
+    
+    public function delete($query) {
+        if (!$this->conn->query($query)) {
+            throw new Exception("Delete failed: " . $this->conn->error);
+        }
+        // Return the number of affected rows
+        return $this->conn->affected_rows;
+    }
+    
+    public function update($query) {
+        if (!$this->conn->query($query)) {
+            throw new Exception("Update failed: " . $this->conn->error);
+        }
+        // Return the number of affected rows
+        return $this->conn->affected_rows;
+    }
 }
 ?>
