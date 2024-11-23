@@ -21,6 +21,14 @@ CREATE TABLE IF NOT EXISTS posts (
     is_active ENUM('yes', 'no') DEFAULT 'yes'
 )";
 
+$create_count_posts_table = "
+CREATE TABLE IF NOT EXISTS posts_per_hour (
+    post_date DATE NOT NULL,
+    post_hour INT NOT NULL,
+    post_count INT NOT NULL,
+    PRIMARY KEY (post_date, post_hour)
+)";
+
 // Execute queries
 if ($conn->query($create_users_table) === TRUE) {
     echo "Users table created successfully<br>";
@@ -30,6 +38,12 @@ if ($conn->query($create_users_table) === TRUE) {
 
 if ($conn->query($create_posts_table) === TRUE) {
     echo "Posts table created successfully<br>";
+} else {
+    echo "Error creating posts table: " . $conn->error . "<br>";
+}
+
+if ($conn->query($create_count_posts_table) === TRUE) {
+    echo "count posts table created successfully<br>";
 } else {
     echo "Error creating posts table: " . $conn->error . "<br>";
 }
