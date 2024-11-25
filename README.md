@@ -7,7 +7,7 @@ The Posts Tracker is a PHP and MySQL based project that focuses on managing and 
 - XAMPP
 - HTML
 
-#### Steps to Run
+### Steps to Run
 1. XAMPP/LAMP/WAMP: Install a local server environment.
 2. install PHP and MySQL.
 2. Clone the project or download the files to your local server.
@@ -30,12 +30,7 @@ The system tracks users birthdays and can highlight posts made by users with bir
 The system counts the number of posts made by users per hour and stores in a table 'posts_per_hour'.
 
 ### Tests in the Project:
-The project includes several tests to ensure that the core functionalities are working correctly:
-1. <b>Photo Fetch Test:</b>
-This test checks that the image fetching feature correctly downloads and saves the image from the provided URL.
-
-2. <b>Post Count Query Test:</b>
-This test verifies that the query to count posts per hour works as expected. It checks that the posts are counted and inserted into the posts_per_hour table accurately.
+The project includes a test to verify that the image fetching feature accurately downloads and saves the image from the specified URL.
 
 ### Database Schema
 ![inmanage-assignment_1](images/inmanage-assignment_1.png)
