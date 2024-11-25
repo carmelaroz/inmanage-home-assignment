@@ -34,11 +34,6 @@ function test_fetch_photo() {
     } else {
         echo "Test Failed: File '$expectedFileName' is empty or not saved correctly.\n";
     }
-
-    // Clean up: Remove the file after the test to avoid artifacts
-    if (file_exists($expectedFileName)) {
-        unlink($expectedFileName);
-    }
 }
 
 test_fetch_photo();
