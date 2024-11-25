@@ -6,20 +6,20 @@ $db = new Database('localhost', 'root', '', 'test_db');
 
 $query = "
     SELECT 
-        users.id AS user_id,
-        users.name AS user_name,
-        users.email AS user_email,
-        posts.title AS post_title,
-        posts.content AS post_content
+        u.id AS user_id,
+        u.name AS user_name,
+        u.email AS user_email,
+        p.title AS post_title,
+        p.content AS post_content
     FROM 
-        users
+        users u
     JOIN 
-        posts 
+        posts p
     ON 
-        users.id = posts.user_id
+        user_id = p.user_id
     WHERE 
-        users.is_active = 'yes' 
-        AND posts.is_active = 'yes';
+        u.is_active = 'yes' 
+        AND p.is_active = 'yes';
 ";
 
 try {
