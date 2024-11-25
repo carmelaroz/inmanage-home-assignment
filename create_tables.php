@@ -1,5 +1,6 @@
 <?php
-require_once 'db_config.php';
+require_once 'Database.php';
+$db = new Database('localhost', 'root', '', 'test_db');
 
 // Create users table
 $create_users_table = "
@@ -24,30 +25,30 @@ CREATE TABLE IF NOT EXISTS posts (
 $create_count_posts_table = "
 CREATE TABLE IF NOT EXISTS posts_per_hour (
     post_date DATE NOT NULL,
-    post_hour INT NOT NULL,
+    post_hour TIME NOT NULL,
     post_count INT NOT NULL,
     PRIMARY KEY (post_date, post_hour)
 )";
 
 // Execute queries
-if ($conn->query($create_users_table) === TRUE) {
+if ($db->conn->query($create_users_table) === TRUE) {
     echo "Users table created successfully<br>";
 } else {
-    echo "Error creating users table: " . $conn->error . "<br>";
+    echo "Error creating users table: " . $db->conn->error . "<br>";
 }
 
-if ($conn->query($create_posts_table) === TRUE) {
+if ($db->conn->query($create_posts_table) === TRUE) {
     echo "Posts table created successfully<br>";
 } else {
-    echo "Error creating posts table: " . $conn->error . "<br>";
+    echo "Error creating posts table: " . $db->conn->error . "<br>";
 }
 
-if ($conn->query($create_count_posts_table) === TRUE) {
+if ($db->conn->query($create_count_posts_table) === TRUE) {
     echo "count posts table created successfully<br>";
 } else {
-    echo "Error creating posts table: " . $conn->error . "<br>";
+    echo "Error creating posts table: " . $db->conn->error . "<br>";
 }
 
 // Close connection
-$conn->close();
+$db->conn->close();
 ?>

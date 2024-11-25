@@ -30,7 +30,7 @@ try {
         foreach ($results as $row) {
             echo "<div style='border: 1px solid #ddd; padding: 15px; margin-bottom: 10px;'>";
             echo "<div style='display: flex; align-items: center;'>";
-            echo "<img src='https://cdn2.vectorstock.com/i/1000x1000/23/81/default-avatar-profile-icon-vector-18942381.jpg' alt='User Avatar' style='width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;'>";
+            echo "<img src='icon.jpg' alt='User Avatar' style='width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;'>";
             echo "<div>";
             echo "<strong>" . htmlspecialchars($row['user_name']) . "</strong><br>";
             echo "<small>Email: " . htmlspecialchars($row['user_email']) . "</small>";
