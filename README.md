@@ -1,4 +1,4 @@
-# inManage - Home Assignment - Posts Tracker
+# Posts Tracker
 ### About
 The Posts Tracker is a PHP and MySQL based project that focuses on managing and analyzing posts and user data. The project integrates three main tables: Posts, Users, and Posts Per Hour. It includes several key features designed to track user activity, count posts, and interact with external services for data insertion.
 ### Technologies Used
